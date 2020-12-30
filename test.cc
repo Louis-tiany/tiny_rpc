@@ -6,19 +6,16 @@
 */
 
 #include <iostream>
+#include <string>
 #include "EventLoop.h"
 #include "TcpServer.h"
-#include "Serilazer.h"
+
 
 int main(int argc, char *argv[])
 {
-    A *a = nullptr;
     MessageCallback f = [&](const TcpConnectionPrt &conn, char *input_buffer){
-        a = A::deserilaze(input_buffer);
-
-        printf("client index:%d val%d\n", a->index_, a->val_);
         char buf[16] = "trailing\n";
-        snprintf(buf, 16, "send: %d\t%d\n", a->index_, a->val_);
+        printf("message: %s\n", input_buffer);
         conn->send((void *)buf, strlen(buf));
         printf("after write in message_callback\n");
     };
@@ -27,6 +24,6 @@ int main(int argc, char *argv[])
     TcpServer server(&loop, f);
     server.start();
     loop.loop();
-    
+
     return 0;
 }
