@@ -1,0 +1,43 @@
+Connector ctor
+before connect
+after connect
+ret -1
+ errorno: 115
+connecting
+connecting func connecting
+ctl channel 4 channel index: -1 
+ctl add channel 4
+before clear
+before poll
+1 channel 
+event loop loop after poll
+4
+1
+channel call back
+revents_ 4
+write callback
+handle write
+ctl channel 4 channel index: 1 
+ctl channel 4 channel index: 1 
+ctl del channel 4
+new conn
+ new_connectionctl channel 4 channel index: -1 
+ctl add channel 4
+client do conn callback
+conn_established : new conn enable_reading
+after write callback
+end one loop
+before clear
+before poll
+1 channel 
+event loop loop after poll
+4
+1
+channel call back
+revents_ 1
+read callback
+do read callback
+client do message callback
+end one loop
+before clear
+before poll
