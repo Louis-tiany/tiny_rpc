@@ -17,15 +17,22 @@ typedef std::shared_ptr<TcpConnection> TcpConnectionPrt;
 typedef std::function<void(const TcpConnectionPrt &)>  ConnectionCallback;
 typedef std::function<void(const TcpConnectionPrt &)>  CloseCallback;
 typedef std::function<void(const TcpConnectionPrt &)>  WriteCallback;
-typedef std::function<void(const TcpConnectionPrt &, char *buf)>  MessageCallback;
+typedef std::function<void(const TcpConnectionPrt &, std::string &buf)>  MessageCallback;
 typedef std::map<int ,TcpConnectionPrt > ConnectionMap;
 class TcpServer{
 
 public:
     
-    TcpServer(EventLoop *loop, MessageCallback message_callback);
+    TcpServer(EventLoop *loop);
 
     void start();
+
+    void set_message_callback(const MessageCallback &message_callback)
+    { message_callback_ = message_callback; }
+    void set_connection_callback(const ConnectionCallback &connection_callback)
+    { connection_callback_ = connection_callback; }
+    void set_write_callabck(const WriteCallback &write_callback)
+    { write_callback_ = write_callback; }
 
 private:
     void new_conn(int sockfd);

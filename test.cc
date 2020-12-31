@@ -13,15 +13,16 @@
 
 int main(int argc, char *argv[])
 {
-    MessageCallback f = [&](const TcpConnectionPrt &conn, char *input_buffer){
+    MessageCallback f = [&](const TcpConnectionPrt &conn, std::string &input_buffer){
         char buf[16] = "trailing\n";
-        printf("message: %s\n", input_buffer);
+        printf("message: %s\n", input_buffer.c_str());
         conn->send((void *)buf, strlen(buf));
         printf("after write in message_callback\n");
     };
 
     EventLoop loop;
-    TcpServer server(&loop, f);
+    TcpServer server(&loop);
+    server.set_message_callback(f);
     server.start();
     loop.loop();
 

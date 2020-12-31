@@ -9,11 +9,10 @@
 #include <functional>
 #include <memory>
 #include "Socket.h"
-TcpServer::TcpServer(EventLoop *loop, MessageCallback message_callback):
+TcpServer::TcpServer(EventLoop *loop):
     loop_(loop),
     acceptor_(new Acceptor(loop)),
-    connection_callback_(),
-    message_callback_(message_callback)
+    connection_callback_()
 { 
     acceptor_->set_new_conn_callback(std::bind(&TcpServer::new_conn, this, std::placeholders::_1));
     acceptor_->get_channel()->set_index(-1);

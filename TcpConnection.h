@@ -23,7 +23,7 @@ public:
     typedef std::function<void(const TcpConnectionPrt &)>  CloseCallback;
     //write complete callback
     typedef std::function<void(const TcpConnectionPrt &)>  WriteCallback;
-    typedef std::function<void(const TcpConnectionPrt &, char *buf)>  MessageCallback;
+    typedef std::function<void(const TcpConnectionPrt &, std::string& buf)>  MessageCallback;
 
     TcpConnection(EventLoop *loop, int sockfd);
 
@@ -36,6 +36,9 @@ public:
     void set_message_callback(MessageCallback message_callback) { message_callback_ = message_callback; }
     void conn_established();
 
+    bool connection() const { return state_ == kConnected; }
+    bool disconnection() const { return state_ == kDisconnected; }
+
     char *InputBuffer() { return &input_buffer_[0]; }
     char *OutputBuffer() { return &output_buffer_[0]; }
 
@@ -44,10 +47,21 @@ public:
     void handle_write();
     void handle_close();
 
+    void shutdown()
+    {  }
+
 
     void send(void *data, size_t len);
     void send_in_loop(void *data, size_t len);
     void connection_destroy();
+
+    void set_context(void *context){
+        context_ = context;
+    }
+
+    void* &get_context()
+    { return context_; }
+
 private:
     enum StateE { kDisconnected, kConnecting, kConnected, kDisconnecting };
     void set_state(StateE state) { state_ = state; }
@@ -67,9 +81,12 @@ private:
     CloseCallback close_callback_;
     MessageCallback message_callback_;
 
+    std::string input_buffer_;
+    std::string output_buffer_;
 
-    char input_buffer_[1024];
-    char output_buffer_[1024];
+//    char input_buffer_[1024];
+//    char output_buffer_[1024];
+    void *context_;
 };
 
 

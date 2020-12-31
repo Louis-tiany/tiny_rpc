@@ -21,7 +21,7 @@ public:
     typedef std::function<void(const TcpConnectionPrt &)>  CloseCallback;
     //write complete callback
     typedef std::function<void(const TcpConnectionPrt &)>  WriteCallback;
-    typedef std::function<void(const TcpConnectionPrt &, char *buf)>  MessageCallback;
+    typedef std::function<void(const TcpConnectionPrt &, std::string &buf)>  MessageCallback;
 public:
     TcpClient(EventLoop *loop, std::string ip, int port);
     ~TcpClient();

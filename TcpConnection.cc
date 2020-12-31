@@ -45,8 +45,9 @@ void TcpConnection::send_in_loop(void *data, size_t len){
 }
 
 void TcpConnection::handle_read(){
-    memset(input_buffer_, 0, 1024);
-    int n = socket_->read(input_buffer_, 1024);
+    char buf[1024] = {'\0'};
+    int n = socket_->read(buf, 1024);
+    input_buffer_ += buf;
     if(n > 0){
         //std::cout << input_buffer_ << std::endl;
         message_callback_(shared_from_this(), input_buffer_);

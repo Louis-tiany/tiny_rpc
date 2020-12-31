@@ -23,8 +23,8 @@ int main(int argc, char *argv[])
         char buf[64] = "message from client say : hello world~~~\n";
         conn->send((void *)a.serilaze(), sizeof(a));
     });
-    client.set_message_callback([](const TcpConnectionPrt &conn, char *b){
-        printf("receive message from server: %s\n", b);
+    client.set_message_callback([](const TcpConnectionPrt &conn, std::string &b){
+        printf("receive message from server: %s\n", b.c_str());
         printf("client do message callback\n");
         char buf[64] = "client message callback\n";
         //conn->send((void *)buf, 64);
