@@ -41,8 +41,8 @@ void HttpResponse::append_buffer(std::string &output) const {
     output.append("15\r\n");
     output.append(body_);
 
-//    output.append("2\r\n");
-//    output.append("ab\r\n");
+    output.append("2\r\n");
+    output.append("ab\r\n");
 
     output.append("0\r\n");
     output.append("\r\n");
