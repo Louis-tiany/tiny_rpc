@@ -63,10 +63,7 @@ public:
         socklen_t addr_len;
         memset(&addr_len, 0, sizeof( socklen_t ));
         memset(&addr_, 0, sizeof(addr_));
-        printf("%d accepting\n", sockfd_);
         int conn = ::accept4(sockfd_, (struct sockaddr *)&addr_, &addr_len, SOCK_NONBLOCK | SOCK_CLOEXEC);
-        std::cout << "accept:" << std::endl;
-        std::cout << conn << std::endl;
         printf("errorno %d\n", errno);
         perror("accpet errno");
         return conn;
@@ -101,6 +98,7 @@ public:
         (void)ret;
     }
 
+
     int read(void *buf, size_t count){
         return ::read(sockfd_, buf, count);
     }
@@ -121,6 +119,12 @@ public:
         }
         else{
             return opt;
+        }
+    }
+
+    void shutdown_write(){
+        if (::shutdown(sockfd_, SHUT_WR) < 0) {
+
         }
     }
 

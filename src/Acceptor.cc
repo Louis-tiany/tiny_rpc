@@ -7,7 +7,7 @@
 
 #include <functional>
 #include <iostream>
-#include "Acceptor.h"
+#include "../include/Acceptor.h"
 
 int create_nonblocking();
 
@@ -33,7 +33,7 @@ void Acceptor::hand_read(){
     (void)client_addr;
     std::cout<<"accepting in" << __FILE__<<std::endl;
     int conn = accept_socket_.accept();
-    std::cout << "new conn:"<< conn << std::endl;
+    printf("new conn fd %d\n", conn);
     if (conn > 0){
         new_conn_callback_(conn);
     }

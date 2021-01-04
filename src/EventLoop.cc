@@ -28,8 +28,7 @@ void EventLoop::loop(){
 
         for(auto channel : active_channels_){
             current_channel_ = channel;
-            std::cout << current_channel_->fd() << std::endl;
-            std::cout << active_channels_.size() << std::endl;
+            printf("active_channels_.size: %lu\n", active_channels_.size());
             current_channel_->handle_event();
         }
         std::cout << "end one loop" << std::endl;

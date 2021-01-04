@@ -47,8 +47,8 @@ public:
     void handle_write();
     void handle_close();
 
-    void shutdown()
-    {  }
+    void shutdown();
+    void shutdown_in_loop();
 
 
     void send(void *data, size_t len);

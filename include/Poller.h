@@ -37,7 +37,7 @@ class Poller{
         void poll(std::vector<Channel *> *active_channels){
 
             int nfd = ::epoll_wait(epoll_fd_, &(*events_.begin()), CONNECT_SIZE, -1);
-            printf("%d channel \n", nfd);
+            printf("%d channel: \n", nfd);
             assert(nfd != 0);
             if(nfd > 0){
                 fill_active_events(active_channels, nfd);

@@ -6,14 +6,12 @@
 */
 
 #include <iostream>
-#include "TcpClient.h"
-#include "Serilazer.h"
+#include "include/TcpClient.h"
 
 
 int main(int argc, char *argv[])
 {
 
-    A a(1,2);
 
     EventLoop loop;
 
@@ -21,7 +19,7 @@ int main(int argc, char *argv[])
     client.set_conn_callback([&](const TcpConnectionPrt &conn){
         printf("client do conn callback\n");
         char buf[64] = "message from client say : hello world~~~\n";
-        conn->send((void *)a.serilaze(), sizeof(a));
+        conn->send(buf, 64);
     });
     client.set_message_callback([](const TcpConnectionPrt &conn, std::string &b){
         printf("receive message from server: %s\n", b.c_str());

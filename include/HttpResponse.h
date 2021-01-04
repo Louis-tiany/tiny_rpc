@@ -15,7 +15,8 @@ public:
     enum HttpResponseState{ kUnknown, k200Ok = 200, k301MovePermanently = 301, k400BadRequest = 400, k404NotFound = 404, };
 
     explicit HttpResponse(bool close):
-        state_(kUnknown)
+        state_(kUnknown),
+        close_connection_(close)
     {  }
 
     void set_state_code(HttpResponseState code){
@@ -43,7 +44,7 @@ public:
     }
 
     void set_body(const std::string &body){
-        body_ = body;
+        body_ = body + "\r\n";
     }
 
     void append_buffer(std::string &output) const ;

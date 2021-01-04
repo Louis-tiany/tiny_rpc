@@ -8,8 +8,8 @@
 #include <cstdio>
 #include <iostream>
 #include <sys/epoll.h>
-#include "Poller.h"
-#include "Channel.h"
+#include "../include/Poller.h"
+#include "../include/Channel.h"
 
 
 const int kNew = -1;

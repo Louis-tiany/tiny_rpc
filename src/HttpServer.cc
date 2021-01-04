@@ -7,8 +7,8 @@
 
 #include <iostream>
 #include <functional>
-#include "HttpContext.h"
-#include "HttpServer.h"
+#include "../include/HttpContext.h"
+#include "../include/HttpServer.h"
 
 static char BadRequest[] = "HTTP/1.1 400 Bad Request\r\n\r\n";
 
@@ -46,19 +46,21 @@ void HttpServer::on_message(const TcpConnectionPrt &conn, std::string &buf){
     printf("buff in buf \n%s\n", buf.c_str());
     if (!context->parse_request(buffer)) {
         conn->send(BadRequest, sizeof(BadRequest));
-        conn->shutdown();
     }
 
     if(context->got_all()){
         printf("parse success\n");
         on_request(conn, context->request());
+        //conn->shutdown();
     }
 }
 
 void HttpServer::on_request(const TcpConnectionPrt &conn, const HttpRequest &request){
     const std::string& connection = request.get_header("Connection");
+    printf("request conn : %s\n", connection.c_str());
     bool close = connection == "close" ||
-        (request.get_version() == HttpRequest::kHttp10 && connection != "Keep-Alive");
+        (request.get_version() == HttpRequest::kHttp10 && connection != "keep-alive");
+    printf("close status %d \n", close);
     HttpResponse response(close);
     http_callback_(request, &response);
     std::string buf;

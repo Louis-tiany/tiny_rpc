@@ -8,7 +8,7 @@
 #include <cstdlib>
 #include <functional>
 #include <iostream>
-#include "TcpConnection.h"
+#include "../include/TcpConnection.h"
 
 TcpConnection::TcpConnection(EventLoop *loop, int sockfd) : 
     loop_(loop),
@@ -97,6 +97,20 @@ void TcpConnection::conn_established(){
         connection_callback_(shared_from_this());
     }
     printf("%s : new conn enable_reading\n", __FUNCTION__);
+}
+
+void TcpConnection::shutdown(){
+    if (state_ == kConnected) {
+        set_state(kDisconnecting);
+    }
+    loop_->run_in_loop(std::bind(&TcpConnection::shutdown_in_loop, this));
+}
+
+void TcpConnection::shutdown_in_loop(){
+
+    if (!channel_->is_writing()) {
+        socket_->shutdown_write();
+    }
 }
 
 

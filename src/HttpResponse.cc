@@ -7,7 +7,8 @@
 
 #include <cstdio>
 #include <iostream>
-#include "HttpResponse.h"
+#include <string.h>
+#include "../include/HttpResponse.h"
 
 
 
@@ -23,9 +24,11 @@ void HttpResponse::append_buffer(std::string &output) const {
         output.append("Connection: close\r\n");
     }
     else{
-        std::snprintf(buf, sizeof(buf), "Connection-Length%zd\r\n", body_.size());
+        std::snprintf(buf, sizeof(buf), "Transfer-Encoding: chunked\r\n");
         output.append(buf);
-        output.append("Connection: Keep-Alive\r\n");
+//        std::snprintf(buf, sizeof(buf), "Connection-Length %zd\r\n", body_.size());
+//        output.append(buf);
+        output.append("Connection: keep-alive\r\n");
     }
     
     for(const auto &header : headers_){
@@ -35,6 +38,13 @@ void HttpResponse::append_buffer(std::string &output) const {
         output.append("\r\n");
     }
     output.append("\r\n");
+    output.append("15\r\n");
     output.append(body_);
+
+//    output.append("2\r\n");
+//    output.append("ab\r\n");
+
+    output.append("0\r\n");
+    output.append("\r\n");
 }
 
