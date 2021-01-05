@@ -2,4 +2,5 @@ cli
 a
 log
 build
+*.swp
 

@@ -9,7 +9,8 @@
 #include <string>
 #include "include/EventLoop.h"
 #include "include/TcpServer.h"
-
+#include "include/Timer.h"
+#include "include/TimerQueue.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,7 +21,17 @@ int main(int argc, char *argv[])
         printf("after write in message_callback\n");
     };
 
-    EventLoop loop;
+    TimerCallback timeout = [](){
+        TimeStamp now = TimeStamp::now();
+        std::string tmp = now.to_format_string();
+        int num = 0;
+        printf("server timeout %d %s\n", num++, tmp.c_str());
+    };
+
+    EventLoop loop;//add_time(TimeStamp::now(), 1),
+    //loop.run_every(10, timeout);
+    printf("now time %s\n", TimeStamp::now().to_format_string().c_str());
+    loop.run_at(add_time(TimeStamp::now(), 1.0), timeout);
     TcpServer server(&loop);
     server.set_message_callback(f);
     server.start();

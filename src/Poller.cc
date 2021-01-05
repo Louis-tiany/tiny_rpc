@@ -29,7 +29,7 @@ Poller::~Poller(){
 }
 
 void Poller::update_channel(Channel *channel){
-    int index = channel->index();
+    const int index = channel->index();
     int fd = channel->fd();
     printf("ctl channel %d channel index: %d \n", channel->fd(), channel->index());
         
@@ -45,7 +45,6 @@ void Poller::update_channel(Channel *channel){
         printf("ctl add channel %d\n", channel->fd());
     }
     else{
-        int fd = channel->fd();
         if(channel->is_nonevent()){
             update(EPOLL_CTL_DEL, channel);
             channel->set_index(kDeleted);
@@ -86,7 +85,7 @@ void Poller::update(int operation, Channel *channel){
     event.events = channel->events();
     event.data.ptr = channel;
 
-    int fd = channel->fd();
+    const int fd = channel->fd();
 
     if(::epoll_ctl(epoll_fd_, operation, fd, &event) < 0){
         std::cout << "epoll do operation" << std::endl;

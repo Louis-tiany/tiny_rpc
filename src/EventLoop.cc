@@ -6,12 +6,13 @@
 */
 
 #include <iostream>
-#include "EventLoop.h"
+#include "../include/EventLoop.h"
 
 
 EventLoop::EventLoop() : 
     loop_(false),
-    poller(new Poller())
+    poller(new Poller()),
+    timer_queue_(new TimerQueue(this))
 {
 }
 
@@ -49,4 +50,23 @@ void EventLoop::run_in_loop(Functor cb){
 
 void EventLoop::remove_channel(Channel *channel){
     poller->remove_channel(channel);
+}
+
+TimerID EventLoop::run_at(TimeStamp time, TimerCallback cb){
+    return timer_queue_->add_timer(std::move(cb), time, 0.0);
+}
+
+
+TimerID EventLoop::run_after(double delay, TimerCallback cb){
+    TimeStamp time(add_time(TimeStamp::now(), delay));
+    return run_at(time, std::move(cb));
+}
+
+
+TimerID EventLoop::run_every(double interval, TimerCallback cb){
+    TimeStamp time(TimeStamp::now());
+    return timer_queue_->add_timer(std::move(cb), time, interval);
+}
+void EventLoop::cancel_timer(TimerID timer_id){
+    timer_queue_->cancel(timer_id);
 }
