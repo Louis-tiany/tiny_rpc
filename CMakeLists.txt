@@ -10,9 +10,10 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 
 aux_source_directory(${PROJECT_SOURCE_DIR}/src DIRSRCS)
 
-add_executable(httpserver ${DIRSRCS} httpserver_test.cc)
+add_executable(httpserver ${DIRSRCS} test/httpserver_test.cc)
 add_executable(tcpclient ${DIRSRCS} client.cc)
-add_executable(tcpserver ${DIRSRCS} test.cc)
+#add_executable(tcpserver ${DIRSRCS} test.cc)
+add_executable(heart_beat ${DIRSRCS} test/heart_beat.cc)
 
 
 

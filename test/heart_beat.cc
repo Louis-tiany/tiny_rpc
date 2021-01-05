@@ -11,11 +11,40 @@
 #include <unordered_set>
 #include <vector>
 #include <list>
-#include "include/EventLoop.h"
-#include "include/TcpConnection.h"
-#include "include/TcpServer.h"
-#include "include/Timer.h"
-#include "include/TimerQueue.h"
+#include "../include/EventLoop.h"
+#include "../include/TcpConnection.h"
+#include "../include/TcpServer.h"
+#include "../include/Timer.h"
+#include "../include/TimerQueue.h"
+
+
+
+
+class HeartBeat{
+
+
+
+private:
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 using WeakConnectionPtr = std::weak_ptr<TcpConnection>;
 

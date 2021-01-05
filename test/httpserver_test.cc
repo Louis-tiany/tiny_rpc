@@ -7,9 +7,9 @@
 
 #include <iostream>
 #include <string>
-#include "include/HttpResponse.h"
-#include "include/HttpServer.h"
-#include "include/HttpRequest.h"
+#include "../include/HttpResponse.h"
+#include "../include/HttpServer.h"
+#include "../include/HttpRequest.h"
 
 
 void on_request(const HttpRequest &request, HttpResponse *response){
