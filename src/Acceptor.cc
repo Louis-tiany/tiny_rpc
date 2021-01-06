@@ -11,14 +11,16 @@
 
 int create_nonblocking();
 
-Acceptor::Acceptor(EventLoop *loop):
+Acceptor::Acceptor(EventLoop *loop, InetAddress addr):
     loop_(loop),
+    addr_(addr),
     accept_socket_(create_nonblocking()),
     accept_channel_(loop_, accept_socket_.fd())
 {
     accept_socket_.set_reuse_addr(true);
     accept_socket_.set_reuse_port(true);
-    accept_socket_.bind_addr("0.0.0.0", 8888);
+    accept_socket_.bind_addr(addr.ip(), addr.port());
+    printf("ip %s port %d\n", addr.ip().c_str(), addr.port());
     accept_channel_.set_read_callback(std::bind(&Acceptor::hand_read,this));
     accept_channel_.set_index(0);
 }

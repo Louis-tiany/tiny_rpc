@@ -12,7 +12,11 @@
 #include "../include/InetAddress.h"
 
 
-InetAddress::InetAddress(std::string ip, std::uint16_t port){
+
+InetAddress::InetAddress(std::string ip, std::uint16_t port):
+    ip_(ip),
+    port_(port)
+{
     ::bzero(&addr_, sizeof(addr_));
     addr_.sin_family = AF_INET;
     addr_.sin_port = htons(port);

@@ -34,7 +34,7 @@ int create_timer_fd(){
 struct timespec how_much_time_from_now(TimeStamp when){
     int64_t micro_seconds = when.micro_seconds_since_epoch() - TimeStamp::now().micro_seconds_since_epoch();
 
-    printf("micro_seconds diff %ld \n", micro_seconds);
+    //printf("micro_seconds diff %ld \n", micro_seconds);
 
     if (micro_seconds < 100) {
         micro_seconds = 100;
@@ -53,7 +53,7 @@ void read_timer_fd(int timer_fd, TimeStamp now){
     if(n != sizeof howmany){
         printf("read timerfd n != howmany\n");
     }
-    printf("read timer fd %s\n", now.to_format_string().c_str());
+    //printf("read timer fd %s\n", now.to_format_string().c_str());
     (void)n;
 }
 

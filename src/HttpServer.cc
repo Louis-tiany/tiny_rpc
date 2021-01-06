@@ -13,8 +13,8 @@
 static char BadRequest[] = "HTTP/1.1 400 Bad Request\r\n\r\n";
 
 
-HttpServer::HttpServer(EventLoop *loop, std::string ip, int port):
-    server_(loop)
+HttpServer::HttpServer(EventLoop *loop, InetAddress addr):
+    server_(loop, addr)
 {
     server_.set_connection_callback(std::bind(&HttpServer::on_connection, this, std::placeholders::_1));
     server_.set_message_callback(std::bind(&HttpServer::on_message, this, std::placeholders::_1, std::placeholders::_2));

@@ -22,7 +22,15 @@ public:
         return ( struct sockaddr * )(&addr_);
     }
 
+
+    const std::string ip() const { return ip_; }
+    const uint16_t port() const { return port_; }
+
+
+
 private:
     struct sockaddr_in addr_;
+    std::string ip_;
+    uint64_t port_;
 };
 #endif

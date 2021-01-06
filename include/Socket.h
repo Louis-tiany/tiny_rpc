@@ -124,7 +124,7 @@ public:
 
     void shutdown_write(){
         if (::shutdown(sockfd_, SHUT_WR) < 0) {
-
+            //::close(sockfd_);
         }
     }
 

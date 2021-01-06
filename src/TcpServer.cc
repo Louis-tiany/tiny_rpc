@@ -9,9 +9,9 @@
 #include <functional>
 #include <memory>
 #include "../include/Socket.h"
-TcpServer::TcpServer(EventLoop *loop):
+TcpServer::TcpServer(EventLoop *loop, InetAddress addr):
     loop_(loop),
-    acceptor_(new Acceptor(loop)),
+    acceptor_(new Acceptor(loop, addr)),
     connection_callback_()
 { 
     acceptor_->set_new_conn_callback(std::bind(&TcpServer::new_conn, this, std::placeholders::_1));

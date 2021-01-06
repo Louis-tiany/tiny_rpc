@@ -32,6 +32,7 @@
 
 #include "Channel.h"
 #include "Socket.h"
+#include "InetAddress.h"
 
 class EventLoop;
 class Channel;
@@ -42,7 +43,7 @@ class Acceptor{
 public:
     typedef std::function<void(int sockfd)> NewConnCallback;
 
-    Acceptor(EventLoop *loop);
+    Acceptor(EventLoop *loop, const InetAddress addr);
     void set_new_conn_callback(NewConnCallback new_conn_callback){
         new_conn_callback_ = std::move(new_conn_callback);
     }
@@ -56,6 +57,7 @@ public:
 
 private:
         EventLoop *loop_;
+        InetAddress addr_;
         NewConnCallback new_conn_callback_;
         Socket accept_socket_;
         Channel accept_channel_;

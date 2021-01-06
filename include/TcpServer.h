@@ -20,10 +20,9 @@ typedef std::function<void(const TcpConnectionPrt &)>  WriteCallback;
 typedef std::function<void(const TcpConnectionPrt &, std::string &buf)>  MessageCallback;
 typedef std::map<int ,TcpConnectionPrt > ConnectionMap;
 class TcpServer{
-
 public:
     
-    TcpServer(EventLoop *loop);
+    TcpServer(EventLoop *loop, InetAddress addr);
 
     void start();
 
@@ -50,10 +49,7 @@ private:
     WriteCallback write_callback_;
     MessageCallback message_callback_;
     CloseCallback close_callback_;
-
-
     ConnectionMap connections_;
-
 };
 
 

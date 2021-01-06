@@ -17,7 +17,7 @@ typedef std::function<void(const HttpRequest&, HttpResponse*)> HttpCallback;
 class HttpServer{
 
 public:
-    HttpServer(EventLoop *loop, std::string ip, int port);
+    HttpServer(EventLoop *loop, InetAddress addr);
     ~HttpServer();
 
     void set_http_callback(HttpCallback http_callback){

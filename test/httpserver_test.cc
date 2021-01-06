@@ -1,8 +1,8 @@
 /*
-	* File     : httpserver_test.cc
-	* Author   : *
-	* Mail     : *
-	* Creation : Thu 31 Dec 2020 12:12:27 PM CST
+    * File     : httpserver_test.cc
+    * Author   : *
+    * Mail     : *
+    * Creation : Thu 31 Dec 2020 12:12:27 PM CST
 */
 
 #include <iostream>
@@ -32,8 +32,9 @@ void on_request(const HttpRequest &request, HttpResponse *response){
 
 int main(int argc, char *argv[])
 {
+    InetAddress addr("0.0.0.0", 8888);
     EventLoop loop;
-    HttpServer server(&loop, "0.0.0.0", 8888);
+    HttpServer server(&loop, addr);
 
     server.set_http_callback(on_request);
 
