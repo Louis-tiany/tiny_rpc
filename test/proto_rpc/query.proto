@@ -1,0 +1,22 @@
+syntax = "proto3";
+package rpc;
+
+// TODO(louis): Describe this message.
+message Query {
+    // Next available id: 1
+    int64 id = 1;
+    string questioner = 2;
+    repeated string question = 3;
+}
+
+message Answer{
+    int64 id = 1;
+    string questioner = 2;
+    string answerer = 3;
+    repeated string solution = 4;
+}
+
+message Empty{
+    optional int32 id = 2;
+}
+

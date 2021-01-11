@@ -7,10 +7,13 @@
 
 #ifndef _SOCKET_H
 #define _SOCKET_H
+#include <bits/types/struct_iovec.h>
+#include <endian.h>
 #define MAXQUEUE 100
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <string.h>
+#include <sys/uio.h>
 #include <netinet/in.h>
 #include <unistd.h>
 #include <string>
@@ -65,7 +68,7 @@ public:
         memset(&addr_, 0, sizeof(addr_));
         int conn = ::accept4(sockfd_, (struct sockaddr *)&addr_, &addr_len, SOCK_NONBLOCK | SOCK_CLOEXEC);
         printf("errorno %d\n", errno);
-        perror("accpet errno");
+        //perror("accpet errno");
         return conn;
     }
 
@@ -103,6 +106,10 @@ public:
         return ::read(sockfd_, buf, count);
     }
 
+    static ssize_t readv(int sockfd, const struct iovec *iov, int iovcnt){
+        return ::readv(sockfd, iov, iovcnt);
+    }
+
     int write(const void *buf, size_t count){
         return ::write(sockfd_, buf, count);
     }
@@ -126,6 +133,30 @@ public:
         if (::shutdown(sockfd_, SHUT_WR) < 0) {
             //::close(sockfd_);
         }
+    }
+
+    static uint64_t host_to_network64(uint64_t host64){
+        return htobe64(host64);
+    }
+
+    static uint32_t host_to_network32(uint32_t host32){
+        return htobe32(host32);
+    }
+
+    static uint16_t host_to_network16(uint16_t host16){
+        return htobe16(host16);
+    }
+
+    static uint64_t network_to_host64(uint64_t network64){
+        return be64toh(network64);
+    }
+
+    static uint32_t network_to_host32(uint32_t network32){
+        return be32toh(network32);
+    }
+
+    static uint16_t network_to_host16(uint16_t network16){
+        return be16toh(network16);
     }
 
 private:

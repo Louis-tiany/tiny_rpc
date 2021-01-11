@@ -1,8 +1,8 @@
 /*
-	* File     : TcpConnection.cc
-	* Author   : *
-	* Mail     : *
-	* Creation : Fri 25 Dec 2020 10:04:51 PM CST
+    * File     : TcpConnection.cc
+    * Author   : *
+    * Mail     : *
+    * Creation : Fri 25 Dec 2020 10:04:51 PM CST
 */
 
 #include <cstdlib>
@@ -45,10 +45,14 @@ void TcpConnection::send_in_loop(void *data, size_t len){
 }
 
 void TcpConnection::handle_read(){
-    char buf[1024] = {'\0'};
-    int n = socket_->read(buf, 1024);
-    input_buffer_ += buf;
-    if(n > 0){
+    //    char buf[1024] = {'\0'};
+    //    int n = socket_->read(buf, 1024);
+    //    input_buffer_.append(buf);
+
+    int save_errno = 0;
+    ssize_t n = input_buffer_.read_fd(socket_->fd(), &save_errno);
+
+    if(n > 0) {
         //std::cout << input_buffer_ << std::endl;
         message_callback_(shared_from_this(), input_buffer_);
     }

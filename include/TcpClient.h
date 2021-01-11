@@ -7,8 +7,10 @@
 
 #ifndef _TCPCLIENT_H
 #define _TCPCLIENT_H
+#include "Buffer.h"
 #include "Connector.h"
 #include "TcpConnection.h"
+#include "InetAddress.h"
 #include <memory>
 #include <string>
 
@@ -21,9 +23,9 @@ public:
     typedef std::function<void(const TcpConnectionPrt &)>  CloseCallback;
     //write complete callback
     typedef std::function<void(const TcpConnectionPrt &)>  WriteCallback;
-    typedef std::function<void(const TcpConnectionPrt &, std::string &buf)>  MessageCallback;
+    typedef std::function<void(const TcpConnectionPrt &, Buffer &buf)>  MessageCallback;
 public:
-    TcpClient(EventLoop *loop, std::string ip, int port);
+    TcpClient(EventLoop *loop, InetAddress addr);
     ~TcpClient();
 
     void connect();

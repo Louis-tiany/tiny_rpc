@@ -9,11 +9,11 @@
 #include <iostream>
 #include "../include/TcpClient.h"
 
-TcpClient::TcpClient(EventLoop *loop, std::string ip, int port):
+TcpClient::TcpClient(EventLoop *loop, InetAddress addr):
     loop_(loop),
-    ip_(ip),
-    port_(port),
-    connector_(new Connector(loop, ip, port)),
+    ip_(addr.ip()),
+    port_(addr.port()),
+    connector_(new Connector(loop, ip_, port_)),
     connect_(false)
 {
     connector_->set_new_conn_callback(std::bind(&TcpClient::new_connection, this, std::placeholders::_1));

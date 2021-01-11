@@ -9,6 +9,7 @@
 #define _TCPCONNECTION_H
 #include "Channel.h"
 #include "EventLoop.h"
+#include "Buffer.h"
 
 #include "Socket.h"
 #include <functional>
@@ -23,7 +24,7 @@ public:
     typedef std::function<void(const TcpConnectionPrt &)>  CloseCallback;
     //write complete callback
     typedef std::function<void(const TcpConnectionPrt &)>  WriteCallback;
-    typedef std::function<void(const TcpConnectionPrt &, std::string& buf)>  MessageCallback;
+    typedef std::function<void(const TcpConnectionPrt &, Buffer& buf)>  MessageCallback;
 
     TcpConnection(EventLoop *loop, int sockfd);
 
@@ -36,11 +37,11 @@ public:
     void set_message_callback(MessageCallback message_callback) { message_callback_ = message_callback; }
     void conn_established();
 
-    bool connection() const { return state_ == kConnected; }
-    bool disconnection() const { return state_ == kDisconnected; }
+    bool connected() const { return state_ == kConnected; }
+    bool disconnected() const { return state_ == kDisconnected; }
 
-    char *InputBuffer() { return &input_buffer_[0]; }
-    char *OutputBuffer() { return &output_buffer_[0]; }
+    Buffer *InputBuffer() { return &input_buffer_; }
+    Buffer *OutputBuffer() { return &output_buffer_; }
 
 
     void handle_read();
@@ -81,8 +82,8 @@ private:
     CloseCallback close_callback_;
     MessageCallback message_callback_;
 
-    std::string input_buffer_;
-    std::string output_buffer_;
+    Buffer input_buffer_;
+    Buffer output_buffer_;
 
 //    char input_buffer_[1024];
 //    char output_buffer_[1024];

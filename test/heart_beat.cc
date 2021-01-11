@@ -48,9 +48,9 @@ public:
         conn->send((void *)buf, 32);
     }
 
-    void on_message(const TcpConnectionPrt &conn, std::string &input_buffer){
+    void on_message(const TcpConnectionPrt &conn, Buffer &input_buffer){
         WeakConnectionPtr weak_conn(conn);
-        printf("message from client: %s\n", input_buffer.c_str());
+        printf("message from client: %s\n", input_buffer.peek());
         connection_table_[weak_conn] = 3;
     }
 

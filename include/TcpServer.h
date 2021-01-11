@@ -17,7 +17,7 @@ typedef std::shared_ptr<TcpConnection> TcpConnectionPrt;
 typedef std::function<void(const TcpConnectionPrt &)>  ConnectionCallback;
 typedef std::function<void(const TcpConnectionPrt &)>  CloseCallback;
 typedef std::function<void(const TcpConnectionPrt &)>  WriteCallback;
-typedef std::function<void(const TcpConnectionPrt &, std::string &buf)>  MessageCallback;
+typedef std::function<void(const TcpConnectionPrt &, Buffer &buf)>  MessageCallback;
 typedef std::map<int ,TcpConnectionPrt > ConnectionMap;
 class TcpServer{
 public:

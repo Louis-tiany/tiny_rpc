@@ -33,17 +33,17 @@ void HttpServer::start(){
 
 void HttpServer::on_connection(const TcpConnectionPrt &conn){
     printf("a browser connection\n");
-    if (conn->connection()) {
+    if (conn->connected()) {
         HttpContext *context = new HttpContext();
         conn->set_context((void *)context);
     }
 }
 
-void HttpServer::on_message(const TcpConnectionPrt &conn, std::string &buf){
+void HttpServer::on_message(const TcpConnectionPrt &conn, Buffer &buf){
     printf("on message callback\n");
     HttpContext *context = (HttpContext *)conn->get_context();
-    const char *buffer = buf.c_str();
-    printf("buff in buf \n%s\n", buf.c_str());
+    const char *buffer = buf.peek();
+    //printf("buff in buf \n%s\n", buf.c_str());
     if (!context->parse_request(buffer)) {
         conn->send(BadRequest, sizeof(BadRequest));
     }

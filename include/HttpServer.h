@@ -27,7 +27,7 @@ public:
 
 private:
     void on_connection(const TcpConnectionPrt &conn);
-    void on_message(const TcpConnectionPrt &conn, std::string &buf);
+    void on_message(const TcpConnectionPrt &conn, Buffer &buf);
     void on_request(const TcpConnectionPrt &conn, const HttpRequest &request);
 
 
